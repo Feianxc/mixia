@@ -31,6 +31,8 @@ jobs:
       - name: 构建测试用服务端
         working-directory: server
         run: go build -o dist/mixia-server-test.exe ./cmd/mixia-server
+      - name: 构建离线恢复工具（端到端测试会调用它）
+        run: npm -w @mixia/cli run build
       - name: 类型检查
         run: |
           npm -w @mixia/core run typecheck

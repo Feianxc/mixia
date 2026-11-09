@@ -24,6 +24,7 @@
 ```bash
 npm ci
 cd server && go build -o dist/mixia-server-test.exe ./cmd/mixia-server && cd ..
+npm -w @mixia/cli run build    # 端到端测试会调用离线恢复工具
 npm test                       # 核心单元测试 + 真实服务端端到端
 npm -w @mixia/ui run dev       # 界面开发预览，配合 node scripts/dev-server.mjs 起本地测试服务端（令牌 dev-token）
 ```

@@ -105,6 +105,7 @@ cd server && go build -o dist/mixia-server ./cmd/mixia-server
 
 ```bash
 cd server && go build -o dist/mixia-server-test.exe ./cmd/mixia-server && cd ..
+npm -w @mixia/cli run build                      # 端到端测试会调用离线恢复工具
 npm test                                         # 核心：单元测试 + 真实服务端端到端
 npm -w @mixia/extension run test
 cd server && go vet ./... && go test ./...
