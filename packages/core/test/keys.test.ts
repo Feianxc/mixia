@@ -193,8 +193,9 @@ describe('复制为环境变量', () => {
     const script = `${text}\nnode -e 'console.log(JSON.stringify(Object.fromEntries(Object.entries(process.env).filter(([k]) => /^V\\d+$/.test(k)))))'`;
     const got = JSON.parse(execFileSync('bash', ['-c', script], { encoding: 'utf8' }));
     rows.forEach((r) => expect(got[r.name]).toBe(r.value));
-  });
+  }, 30_000);
 
+  // pwsh 冷启动在 CI 机器上可能超过默认的 5 秒
   it('真实 PowerShell 里执行：值逐字一致', () => {
     const nonEmpty = rows.filter((r) => r.value);
     const { text } = renderEnv(nonEmpty, 'powershell');
@@ -203,7 +204,7 @@ describe('复制为环境变量', () => {
     const encoded = Buffer.from(script, 'utf16le').toString('base64');
     const got = JSON.parse(execFileSync('pwsh', ['-NoProfile', '-EncodedCommand', encoded], { encoding: 'utf8' }));
     nonEmpty.forEach((r) => expect(got[r.name]).toBe(r.value));
-  });
+  }, 30_000);
 
   it('非法变量名不进入输出，并告诉调用方', () => {
     const evil = [
