@@ -1,0 +1,16 @@
+{
+  "name": "mixia",
+  "private": true,
+  "version": "0.1.0",
+  "description": "密匣 Mixia：自托管、端到端加密的个人密码管理器（Windows、Android、浏览器扩展、Go 同步服务端）",
+  "license": "MIT",
+  "author": "FEIAN",
+  "homepage": "https://github.com/Feianxc/mixia#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/Feianxc/mixia.git" },
+  "bugs": { "url": "https://github.com/Feianxc/mixia/issues" },
+  "workspaces": ["packages/*", "apps/cli", "apps/desktop", "apps/mobile", "apps/extension"],
+  "scripts": {
+    "test": "npm -w @mixia/core run test",
+    "typecheck": "npm -w @mixia/core run typecheck"
+  }
+}

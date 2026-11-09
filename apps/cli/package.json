@@ -1,0 +1,9 @@
+{
+  "name": "@mixia/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "esbuild src/recover.ts --bundle --platform=node --format=cjs --target=node20 --outfile=dist/mixia-recover.cjs" },
+  "dependencies": { "@mixia/core": "*" },
+  "devDependencies": { "esbuild": "0.28.2" }
+}

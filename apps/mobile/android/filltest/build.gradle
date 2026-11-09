@@ -1,0 +1,14 @@
+// 只用于验收自动填充的最小登录页。settings.gradle 里按环境变量才包含，不进正式构建。
+apply plugin: 'com.android.application'
+
+android {
+    namespace = "online.feian.mixia.filltest"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "online.feian.mixia.filltest"
+        minSdkVersion 26
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1"
+    }
+}

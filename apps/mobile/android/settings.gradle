@@ -1,0 +1,9 @@
+include ':app'
+include ':capacitor-cordova-android-plugins'
+project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
+
+apply from: 'capacitor.settings.gradle'
+// 自动填充验收用的测试页，正式构建不包含
+if (System.getenv('MIXIA_FILLTEST') == '1') {
+    include ':filltest'
+}

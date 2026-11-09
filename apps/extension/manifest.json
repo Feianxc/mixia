@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "密匣",
+  "version": "0.1.0",
+  "description": "从已解锁的密匣桌面端填充网页登录框。每次填充都在桌面窗口确认。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtIqPTaVCBrVlTestMYFsGG/6GGy07B9J+xt3hXBVqZpnEU5K3wSamCLMYYC3gWkG9QTQN9iMOX0l3Oa5iUtHetW7qjXstMtmQJ4kOOeFYohizXmjTxxFRnAEMkkBFqKdSmzzQXh2Zl67JDgCAuneUXDrP/owhHTPNglReQCzsvRHEPFZODV/DtINfsv/CwCg5wFaWiDPVnP0NNow5Dx7pL1E8SpRmk+WHJ0pFgV4NUjPcpp8anrGkMdaCCgOVicktpxvnuTGHZaO7U/bR+m5fNGonWE1Pmw0TWaWhc3XbgTl/dai7DAoY98X41qQwO/38uWzYOsx9y1FCk3oSb4MqQIDAQAB",
+  "minimum_chrome_version": "127",
+  "icons": { "16": "icon-16.png", "32": "icon-32.png", "48": "icon-48.png", "128": "icon-128.png" },
+  "action": {
+    "default_title": "密匣",
+    "default_popup": "popup.html",
+    "default_icon": { "16": "icon-16.png", "32": "icon-32.png" }
+  },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": ["nativeMessaging", "webNavigation"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'"
+  }
+}

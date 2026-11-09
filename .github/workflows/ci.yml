@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: 核心、界面与扩展
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+      - run: npm ci
+      - name: 构建测试用服务端
+        working-directory: server
+        run: go build -o dist/mixia-server-test.exe ./cmd/mixia-server
+      - name: 类型检查
+        run: |
+          npm -w @mixia/core run typecheck
+          npm -w @mixia/ui run typecheck
+          npm -w @mixia/extension run typecheck
+      - name: 核心测试（单元 + 真实服务端端到端）
+        run: npm test
+      - name: 扩展测试
+        run: npm -w @mixia/extension run test
+      - name: 构建界面和扩展
+        run: |
+          npm -w @mixia/ui run build
+          npm -w @mixia/extension run build
+
+  server:
+    name: 服务端
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+      - run: go vet ./...
+      - run: go test ./...
+      - name: 构建 Linux 静态二进制
+        run: CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o dist/mixia-server ./cmd/mixia-server
+
+  native:
+    name: 桌面原生助手（Windows）
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/desktop/native/hwkey/go.mod
+          cache-dependency-path: apps/desktop/native/*/go.sum
+      - name: TPM 助手（只跑协议测试，CI 机器的 TPM 不可依赖）
+        working-directory: apps/desktop/native/hwkey
+        run: |
+          go vet ./...
+          go test -count=1 -run "Test(Line|ID|Largest|Oversized|Bad|Name|Unseal|Backend|Errors|Panic|Unavailable)" .
+          go build -trimpath -ldflags "-s -w" -o dist/mixia-hwkey.exe .
+      - name: 浏览器桥（真实命名管道）
+        working-directory: apps/desktop/native/nmhost
+        run: |
+          go vet ./...
+          go test -count=1 .
+          go build -trimpath -ldflags "-s -w" -o dist/mixia-nmhost.exe .
+
+  android:
+    name: Android 调试包
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: npm ci
+      - run: npm -w @mixia/ui run build
+      - name: 同步 Capacitor 工程
+        working-directory: apps/mobile
+        run: npx cap sync android
+      - name: 构建调试包
+        working-directory: apps/mobile/android
+        run: ./gradlew --no-daemon assembleDebug

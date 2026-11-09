@@ -1,0 +1,7 @@
+{
+  "name": "online.feian.mixia",
+  "description": "密匣",
+  "path": "mixia-nmhost.exe",
+  "type": "stdio",
+  "allowed_origins": ["chrome-extension://ikicghdoopckcolomkneepiooaengmep/"]
+}

@@ -1,0 +1,6 @@
+[Unit]
+Description=Mixia encrypted data backup
+
+[Service]
+Type=oneshot
+ExecStart=/srv/apps/mixia/current/mixia-backup.sh

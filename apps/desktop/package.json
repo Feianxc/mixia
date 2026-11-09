@@ -1,0 +1,53 @@
+{
+  "name": "@mixia/desktop",
+  "productName": "Mixia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "密匣 个人密码管理器",
+  "author": "FEIAN",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "bundle": "node build.mjs",
+    "start": "node build.mjs && electron .",
+    "dist": "node build.mjs && electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.0",
+    "esbuild": "0.28.2",
+    "playwright-core": "1.65.0"
+  },
+  "build": {
+    "appId": "online.feian.mixia",
+    "productName": "Mixia",
+    "copyright": "FEIAN",
+    "directories": { "output": "release", "buildResources": "build" },
+    "files": ["dist/**", "ui/**", "package.json"],
+    "asar": true,
+    "extraResources": [
+      { "from": "native/hwkey/dist/mixia-hwkey.exe", "to": "mixia-hwkey.exe" },
+      { "from": "native/nmhost/dist/mixia-nmhost.exe", "to": "mixia-nmhost.exe" },
+      { "from": "native/nmhost/online.feian.mixia.json", "to": "online.feian.mixia.json" }
+    ],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.png" },
+    "nsis": {
+      "oneClick": false,
+      "include": "build/installer.nsh",
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "密匣",
+      "uninstallDisplayName": "密匣",
+      "artifactName": "Mixia-Setup-${version}.${ext}",
+      "deleteAppDataOnUninstall": false
+    },
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false
+    }
+  }
+}

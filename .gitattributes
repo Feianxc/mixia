@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.png binary
+*.jpg binary
+*.webp binary
+*.ico binary
+*.woff2 binary
+*.jar binary
+*.pdf binary
+
+package-lock.json linguist-generated=true
+packages/ui/src/seal-glyphs.ts linguist-generated=true
+研究报告/** linguist-documentation=true

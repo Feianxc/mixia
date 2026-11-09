@@ -1,0 +1,43 @@
+[Unit]
+Description=Mixia vault sync server (ciphertext only), localhost only
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=mixia
+Group=mixia
+EnvironmentFile=/etc/mixia/env
+ExecStart=/srv/apps/mixia/current/mixia-server serve
+Restart=always
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+# 只收发本机回环。服务进程即使被攻破，也无法主动向外连接。
+IPAddressAllow=localhost
+IPAddressDeny=any
+ReadWritePaths=/var/lib/mixia
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

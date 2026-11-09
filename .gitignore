@@ -1,0 +1,40 @@
+# 依赖与构建产物
+node_modules/
+dist/
+dist-*/
+release/
+*.tsbuildinfo
+apps/desktop/ui/
+apps/desktop/native/nmhost/mixia-nmhost
+*.exe
+
+# Android 构建产物（apps/mobile/android/.gitignore 里还有一份 Capacitor 规则）
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+apps/mobile/android/.gradle/
+
+# 签名密钥、令牌和本地数据：永远不要提交
+.secrets/
+.private/
+.env
+.env.*
+!.env.example
+*.pem
+*.jks
+*.keystore
+*.p12
+keystore.properties
+data/
+.dev-data/
+
+# 本机工具、交付物和中间文件
+.toolchain/
+.claude/
+交付/
+研究报告/验收/
+研究报告/*.docx
+
+# 日志与系统文件
+*.log
+.DS_Store
+Thumbs.db

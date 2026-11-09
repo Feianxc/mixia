@@ -1,0 +1,14 @@
+{
+  "appId": "online.feian.mixia",
+  "appName": "密匣",
+  "webDir": "../../packages/ui/dist",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": false,
+    "backgroundColor": "#05060d"
+  },
+  "server": {
+    "androidScheme": "https"
+  },
+  "loggingBehavior": "none"
+}

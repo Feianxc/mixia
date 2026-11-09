@@ -1,0 +1,48 @@
+name: 问题反馈
+description: 功能不正常、报错、界面错乱
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **安全漏洞请不要在这里提**，改用仓库的 Security → Report a vulnerability 私下报告。
+        贴日志和截图前，确认里面没有真实的密码、密钥、恢复码或服务器地址。
+  - type: dropdown
+    id: part
+    attributes:
+      label: 哪个部分
+      options:
+        - Windows 桌面端
+        - Android 手机端
+        - 浏览器扩展
+        - 服务端
+        - 离线恢复工具
+        - 文档
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 版本和环境
+      placeholder: 例如 0.1.0，Windows 11 24H2 / Android 16 / Chrome 157
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开……
+        2. 点……
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的结果和实际的结果
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 报错信息或截图（可选）

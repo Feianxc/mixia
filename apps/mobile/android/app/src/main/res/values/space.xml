@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深空底色：启动画面和窗口底色，和界面里的星空接得上 -->
+    <color name="space">#05060D</color>
+</resources>
