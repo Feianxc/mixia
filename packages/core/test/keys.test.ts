@@ -64,9 +64,9 @@ describe('服务商识别', () => {
     ['github_pat_11ABCDEFG0abcdefghijkl_mnopqrstuvwxyz', 'GitHub', 'GITHUB_TOKEN'],
     ['glpat-abcdefghijklmnopqrst', 'GitLab', 'GITLAB_TOKEN'],
     ['AKIAIOSFODNN7EXAMPLE', 'AWS', 'AWS_ACCESS_KEY_ID'],
-    ['AIzaSyA1234567890abcdefghijklmnopqrstuv', 'Google', 'GOOGLE_API_KEY'],
+    // 全是虚构值。Google、腾讯云、Stripe 三条拆开拼接，只是为了不被 GitHub 密钥扫描当成真密钥
+    ['AIza' + 'SyA1234567890abcdefghijklmnopqrstuv', 'Google', 'GOOGLE_API_KEY'],
     ['LTAI5tABCDEFGHIJKLMN', '阿里云', 'ALIBABA_CLOUD_ACCESS_KEY_ID'],
-    // 下面两条是虚构值，拆开拼接只是为了不被 GitHub 推送保护当成真密钥
     ['AKID' + 'abcdefghijklmnopqrstuvwxyz012345', '腾讯云', 'TENCENTCLOUD_SECRET_ID'],
     ['sk_' + 'live_abcdefghijklmnopqrstuvwx', 'Stripe', 'STRIPE_SECRET_KEY'],
     ['hf_abcdefghijklmnopqrstuvwxyz012345', 'Hugging Face', 'HF_TOKEN'],
