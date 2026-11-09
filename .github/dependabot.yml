@@ -5,8 +5,21 @@ updates:
     schedule:
       interval: monthly
     groups:
-      npm:
-        patterns: ["*"]
+      # 小版本和补丁合成一个 PR；大版本各自单独开，逐个评估
+      npm-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      # 类型定义跟着运行时走：桌面端和 CI 用 Node 24
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # 签名、哈希和恢复码用的加密库。大版本改了导入路径和接口，
+      # 要改代码并验证和已有数据兼容，单独做，不随依赖更新自动升级
+      - dependency-name: "@noble/curves"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@noble/hashes"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@scure/bip39"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: gomod
     directories:
       - /server
@@ -18,6 +31,11 @@ updates:
     directory: /apps/mobile/android
     schedule:
       interval: monthly
+    ignore:
+      # Gradle 9.6 起删掉了 Capacitor 8 所用 Android Gradle 插件依赖的内部接口，
+      # 要等随 Capacitor 升级 Android 插件后再升 wrapper 的大版本
+      - dependency-name: "gradle-wrapper"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
