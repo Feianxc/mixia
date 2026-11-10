@@ -3,6 +3,19 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 1.0 之前协议和存储格式都可能变化。
 
+## [未发布]
+
+### 变更
+
+- 依赖升级：Capacitor 8.6.0、vite 8.3.6、TypeScript 7.0.2、vitest 5.1.0、lucide-react 1.70.0、
+  @types/chrome 0.3.7、google-services 4.5.0。
+- CI 使用 actions/checkout v7、setup-node v7、setup-go v7、setup-java v6。
+
+### 暂缓
+
+- @noble/curves、@noble/hashes、@scure/bip39 的 2.x：导入路径和接口都变了，要改代码并验证与已有数据兼容，单独做。
+- Gradle 9：Capacitor 8 用的 Android Gradle 插件依赖一个 Gradle 9.6 删掉的内部接口，等 Android 插件升级后再升。
+
 ## [0.1.0] - 2026-11-09
 
 第一个公开版本（预发布）。
